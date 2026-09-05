@@ -25,7 +25,9 @@ export default function CreatePoster() {
     contact: "hello@techinnovators.com",
     additionalDetails: "Prizes up to $50,000",
     style: "Modern",
-    format: "A4 Portrait"
+    format: "A4 Portrait",
+    preferredArchetype: "auto",
+    preferredFontPairing: "auto",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -55,6 +57,8 @@ export default function CreatePoster() {
           },
           style: formData.style,
           format: formData.format,
+          preferredArchetype: formData.preferredArchetype === "auto" ? undefined : formData.preferredArchetype,
+          preferredFontPairing: formData.preferredFontPairing === "auto" ? undefined : formData.preferredFontPairing,
         }),
       });
 
@@ -69,6 +73,10 @@ export default function CreatePoster() {
         height: data.height,
         background: data.background,
         elements: data.elements,
+        layoutArchetype: data.layoutArchetype,
+        textSafeZone: data.textSafeZone,
+        colorPalette: data.colorPalette,
+        fontPairing: data.fontPairing,
       });
 
       router.push("/editor");
@@ -166,6 +174,31 @@ export default function CreatePoster() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">Format</label>
                 <select name="format" value={formData.format} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900 bg-white placeholder-slate-400 bg-white">
                   {formats.map(f => <option key={f} value={f}>{f}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Layout Archetype</label>
+                <select name="preferredArchetype" value={formData.preferredArchetype} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900 bg-white placeholder-slate-400 bg-white">
+                  <option value="auto">Auto (AI Determined)</option>
+                  <option value="hero-top-text-bottom">Hero Top, Text Bottom</option>
+                  <option value="hero-bottom-text-top">Text Top, Hero Bottom</option>
+                  <option value="split-vertical">Split Vertical Columns</option>
+                  <option value="centered-badge">Centered Floating Badge</option>
+                  <option value="asymmetric-thirds">Asymmetric Thirds</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Typography Pairing</label>
+                <select name="preferredFontPairing" value={formData.preferredFontPairing} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900 bg-white placeholder-slate-400 bg-white">
+                  <option value="auto">Auto (AI Determined)</option>
+                  <option value="modern-bold">Modern Bold (Montserrat + Inter)</option>
+                  <option value="editorial-serif">Editorial Serif (Playfair Display + Inter)</option>
+                  <option value="high-impact">High Impact (Oswald + Inter)</option>
+                  <option value="tech-futuristic">Tech Futuristic (Space Grotesk + Inter)</option>
+                  <option value="clean-corporate">Clean Corporate (Plus Jakarta Sans + Inter)</option>
+                  <option value="dramatic-cinematic">Dramatic Cinematic (Cinzel + Inter)</option>
                 </select>
               </div>
             </div>

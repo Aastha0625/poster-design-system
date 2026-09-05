@@ -1,5 +1,20 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# Google Gemini API Key (Required for poster generation)
+GEMINI_API_KEY="your-gemini-api-key"
+
+# Optional: Override the Gemini model (defaults to gemini-3.6-flash)
+GEMINI_MODEL="gemini-3.6-flash"
+
+# Optional: Enable local caching to save API calls during testing
+# DEVELOPMENT_MODE="true"
+```
+
 ## Getting Started
 
 First, run the development server:

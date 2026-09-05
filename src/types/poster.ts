@@ -38,15 +38,60 @@ export interface ShapeElement extends BaseElement {
 export interface ImageElement extends BaseElement {
   type: "image";
   src: string;
+  role?: string;
 }
 
 export type PosterElement = TextElement | ShapeElement | ImageElement;
+
+export type LayoutArchetype = 
+  | "hero-top-text-bottom" 
+  | "hero-bottom-text-top" 
+  | "split-vertical" 
+  | "centered-badge" 
+  | "asymmetric-thirds";
+
+export interface TextSafeZone {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  description?: string;
+}
+
+export interface ColorPalette {
+  background: string;
+  primaryText: string;
+  secondaryText: string;
+  accent: string;
+  surface?: string;
+  overlay?: string;
+}
+
+export type FontPairingKey = 
+  | "modern-bold" 
+  | "editorial-serif" 
+  | "high-impact" 
+  | "tech-futuristic" 
+  | "clean-corporate" 
+  | "dramatic-cinematic";
+
+export interface FontPairing {
+  id: FontPairingKey;
+  label: string;
+  displayFont: string;
+  bodyFont: string;
+  vibe: string;
+}
 
 export interface PosterState {
   width: number;
   height: number;
   background: string;
   elements: PosterElement[];
+  layoutArchetype?: LayoutArchetype;
+  textSafeZone?: TextSafeZone;
+  colorPalette?: ColorPalette;
+  fontPairing?: FontPairingKey;
 }
 
 export interface EventDetails {
@@ -61,9 +106,33 @@ export interface EventDetails {
   additionalDetails: string;
 }
 
+export interface GeminiDesignBrief {
+  visualConcept: string;
+  vibeJustification: string;
+  layoutArchetype: LayoutArchetype;
+  fontPairing: FontPairingKey;
+  colorPalette: ColorPalette;
+  heroVisual: {
+    required: boolean;
+    description: string;
+  };
+  copy: {
+    kicker?: string;
+    title: string;
+    description?: string;
+    date?: string;
+    time?: string;
+    venue?: string;
+    cta?: string;
+    contact?: string;
+  };
+}
+
 export interface PosterDesignRequest {
   eventDetails: EventDetails;
   style: string;
   format: "A4 Portrait" | "A4 Landscape" | "Square" | "Story";
+  preferredArchetype?: LayoutArchetype;
+  preferredFontPairing?: FontPairingKey;
 }
 

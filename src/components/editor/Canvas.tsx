@@ -148,11 +148,24 @@ export default function Canvas() {
             const textEl = el as TextElement;
             return (
               <Text
-                key={el.id} id={el.id} x={textEl.x} y={textEl.y} width={textEl.width}
-                text={textEl.text} fontSize={textEl.fontSize} fontFamily={textEl.fontFamily || "Arial"}
-                fill={textEl.fill} align={textEl.align || "left"} fontStyle={textEl.fontWeight === "bold" ? "bold" : "normal"}
-                draggable onClick={() => setSelectedElementId(el.id)} onTap={() => setSelectedElementId(el.id)}
-                onDragEnd={(e) => handleDragEnd(e, el.id)} onTransformEnd={(e) => handleTransformEnd(e, el.id, "text")}
+                key={el.id} 
+                id={el.id} 
+                x={textEl.x} 
+                y={textEl.y} 
+                width={textEl.width}
+                text={textEl.text} 
+                fontSize={textEl.fontSize} 
+                fontFamily={textEl.fontFamily || "Arial"}
+                fill={textEl.fill} 
+                align={textEl.align || "left"} 
+                fontStyle={textEl.fontWeight === "bold" ? "bold" : "normal"}
+                lineHeight={textEl.lineHeight}
+                letterSpacing={textEl.letterSpacing}
+                draggable 
+                onClick={() => setSelectedElementId(el.id)} 
+                onTap={() => setSelectedElementId(el.id)}
+                onDragEnd={(e) => handleDragEnd(e, el.id)} 
+                onTransformEnd={(e) => handleTransformEnd(e, el.id, "text")}
               />
             );
           }
@@ -160,19 +173,50 @@ export default function Canvas() {
           if (el.type === "shape") {
             const shapeEl = el as ShapeElement;
             const commonProps = {
-              id: el.id, x: shapeEl.x, y: shapeEl.y, fill: shapeEl.fill,
-              draggable: true, onClick: () => setSelectedElementId(el.id), onTap: () => setSelectedElementId(el.id),
-              onDragEnd: (e: any) => handleDragEnd(e, el.id), onTransformEnd: (e: any) => handleTransformEnd(e, el.id, "shape"),
+              id: el.id, 
+              x: shapeEl.x, 
+              y: shapeEl.y, 
+              fill: shapeEl.fill,
+              stroke: shapeEl.stroke,
+              strokeWidth: shapeEl.strokeWidth,
+              draggable: true, 
+              onClick: () => setSelectedElementId(el.id), 
+              onTap: () => setSelectedElementId(el.id),
+              onDragEnd: (e: any) => handleDragEnd(e, el.id), 
+              onTransformEnd: (e: any) => handleTransformEnd(e, el.id, "shape"),
             };
 
             if (shapeEl.shapeType === "rectangle") {
-              return <Rect key={el.id} {...commonProps} width={shapeEl.width} height={shapeEl.height} />;
+              return (
+                <Rect 
+                  key={el.id} 
+                  {...commonProps} 
+                  width={shapeEl.width} 
+                  height={shapeEl.height} 
+                  cornerRadius={shapeEl.cornerRadius}
+                />
+              );
             }
             if (shapeEl.shapeType === "circle") {
-              return <Circle key={el.id} {...commonProps} radius={shapeEl.width / 2} offsetX={-(shapeEl.width / 2)} offsetY={-(shapeEl.height / 2)} />;
+              return (
+                <Circle 
+                  key={el.id} 
+                  {...commonProps} 
+                  radius={shapeEl.width / 2} 
+                  offsetX={-(shapeEl.width / 2)} 
+                  offsetY={-(shapeEl.height / 2)} 
+                />
+              );
             }
             if (shapeEl.shapeType === "line") {
-              return <Rect key={el.id} {...commonProps} width={shapeEl.width} height={Math.max(shapeEl.height, 2)} />;
+              return (
+                <Rect 
+                  key={el.id} 
+                  {...commonProps} 
+                  width={shapeEl.width} 
+                  height={Math.max(shapeEl.height, 2)} 
+                />
+              );
             }
           }
           return null;
